@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Happy Birthday 🎂</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, Helvetica, sans-serif;
+}
+
+body{
+    overflow:hidden;
+    background:linear-gradient(135deg,#ff758c,#ff7eb3,#ffb199);
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+}
+
+canvas{
+    position:fixed;
+    top:0;
+    left:0;
+    z-index:0;
+}
+
+.container{
+    position:relative;
+    z-index:2;
+    width:90%;
+    max-width:420px;
+    text-align:center;
+    background:rgba(255,255,255,.18);
+    backdrop-filter:blur(15px);
+    border-radius:25px;
+    padding:30px 25px;
+    color:white;
+    box-shadow:0 10px 30px rgba(0,0,0,.25);
+    animation:pop 1s ease;
+}
+
+@keyframes pop{
+    from{
+        transform:scale(.5);
+        opacity:0;
+    }
+    to{
+        transform:scale(1);
+        opacity:1;
+    }
+}
+
+h1{
+    font-size:2.2rem;
+    margin-bottom:15px;
+}
+
+h2{
+    color:#fffbe6;
+    margin-bottom:20px;
+}
+
+p{
+    line-height:1.6;
+    font-size:18px;
+}
+
+button{
+    margin-top:25px;
+    padding:14px 30px;
+    border:none;
+    border-radius:40px;
+    background:#fff;
+    color:#ff4b8a;
+    font-size:18px;
+    font-weight:bold;
+    cursor:pointer;
+    transition:.3s;
+}
+
+button:hover{
+    transform:scale(1.08);
+}
+
+.balloon{
+    position:absolute;
+    bottom:-120px;
+    width:60px;
+    animation:float 8s linear infinite;
+}
+
+.balloon:before{
+    content:"";
+    position:absolute;
+    width:60px;
+    height:75px;
+    background:red;
+    border-radius:50%;
+}
+
+.balloon:after{
+    content:"";
+    position:absolute;
+    top:75px;
+    left:30px;
+    width:2px;
+    height:80px;
+    background:white;
+}
+
+.b1{
+    left:5%;
+    animation-duration:10s;
+}
+
+.b1:before{
+    background:#ff4b5c;
+}
+
+.b2{
+    left:80%;
+    animation-duration:8s;
+}
+
+.b2:before{
+    background:#4fc3f7;
+}
+
+.b3{
+    left:45%;
+    animation-duration:12s;
+}
+
+.b3:before{
+    background:#ffd54f;
+}
+
+@keyframes float{
+    from{
+        transform:translateY(0);
+    }
+    to{
+        transform:translateY(-120vh);
+    }
+}
+
+.message{
+    display:none;
+    margin-top:20px;
+    font-size:20px;
+    color:#fff;
+    animation:fade 1s;
+}
+
+@keyframes fade{
+    from{opacity:0;}
+    to{opacity:1;}
+}
+
+@media(max-width:480px){
+
+h1{
+font-size:1.8rem;
+}
+
+h2{
+font-size:1.3rem;
+}
+
+p{
+font-size:16px;
+}
+
+button{
+width:100%;
+}
+
+}
+</style>
+
+</head>
+<body>
+
+<canvas id="confetti"></canvas>
+
+<div class="balloon b1"></div>
+<div class="balloon b2"></div>
+<div class="balloon b3"></div>
+
+<div class="container">
+
+<h1>🎂 Happy Birthday 🎂</h1>
+
+<h2>Dear My love Anuspriya ❤️</h2>
+
+<p>
+Happiest Birthday my love, Anuspriya! 💖✨
+Happiest birthday to the girl👸 jo hamesha mere sath rehti hai🤗, doesn't matter if it's bad times or good times👀. 🌸 From 31st January jab humari baatein shuru hui thi, to 6th February jab tumne propose kiya tha👀... those moments completely changed my life and I got so much happiness 😊and amazed..😱 Looking back at all the days we’ve spent together, for about 1yr 8m 17days...🥳 that's 624 days... I just feel so lucky.
+Thank you so much for being my support, my therapist, and my favorite person. 🫂 Thank you for always listening to me, supporting me in every situation, and giving your opinions (even if I act silly sometimes😅🙄).
+Having a girl who is the prettiest from both outside and inside is such a blessing😊🤭, and I am truly grateful to God for bringing you into my life. 🌸 I pray for your happiness, your success, and your big warm smile every single day. I hope my prayers hug you when my arms can't.👀🤗
+</p>
+
+<button onclick="showWish()">
+🎁 Open Surprise
+</button>
+
+<div class="message" id="wish">
+🎉 Have the most amazing birthday ever! 🎂🥳❤️
+</div>
+
+</div>
+
+<script>
+
+function showWish(){
+document.getElementById("wish").style.display="block";
+}
+
+// ------------------
+// Confetti Animation
+// ------------------
+
+const canvas=document.getElementById("confetti");
+const ctx=canvas.getContext("2d");
+
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+
+window.addEventListener("resize",()=>{
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+});
+
+const pieces=[];
+
+for(let i=0;i<180;i++){
+
+pieces.push({
+
+x:Math.random()*canvas.width,
+y:Math.random()*canvas.height-canvas.height,
+r:Math.random()*6+4,
+d:Math.random()*180,
+color:`hsl(${Math.random()*360},100%,60%)`,
+tilt:Math.random()*10-10,
+tiltAngleIncrement:Math.random()*0.08+0.04,
+tiltAngle:0
+
+});
+
+}
+
+function draw(){
+
+ctx.clearRect(0,0,canvas.width,canvas.height);
+
+pieces.forEach(p=>{
+
+ctx.beginPath();
+
+ctx.lineWidth=p.r;
+
+ctx.strokeStyle=p.color;
+
+ctx.moveTo(p.x+p.tilt+p.r/2,p.y);
+
+ctx.lineTo(p.x+p.tilt,p.y+p.tilt+p.r);
+
+ctx.stroke();
+
+});
+
+update();
+
+requestAnimationFrame(draw);
+
+}
+
+function update(){
+
+pieces.forEach(p=>{
+
+p.tiltAngle+=p.tiltAngleIncrement;
+
+p.y+=(Math.cos(p.d)+3+p.r/2)/2;
+
+p.x+=Math.sin(p.d);
+
+p.tilt=Math.sin(p.tiltAngle)*15;
+
+if(p.y>canvas.height){
+
+p.y=-20;
+p.x=Math.random()*canvas.width;
+
+}
+
+});
+
+}
+
+draw();
+
+</script>
+
+</body>
+</html>
